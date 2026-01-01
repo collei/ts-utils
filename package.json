@@ -1,5 +1,5 @@
 {
-  "name": "ts-utils",
+  "name": "@alarido/ts-utils",
   "version": "1.0.0",
   "description": "\"# ts-utils\"",
   "main": "dist/index.js",
