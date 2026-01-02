@@ -43,6 +43,7 @@ class CompareUtils {
             const val_a = sa[key];
             const val_b = sb[key];
             let inequal = false;
+            let sublist : DivergentValueInfo[] = [];
             //
             if (val_a instanceof Date && val_b instanceof Date) {
                 inequal = ! this.areSameDate(val_a, val_b);
@@ -53,9 +54,28 @@ class CompareUtils {
                 const date_a = dates.parse(val_a);
                 inequal = ! this.areSameDate(date_a, val_b);
             } else if (is_object(val_a) && is_object(val_b)) {
-                inequal = this.areDivergent(val_a, val_b);
+                sublist = this.getDivergentValues(val_a, val_b);
+                inequal = sublist.length > 0;
             } else {
                 inequal = ! (strictCompare ? (val_a === val_b) : (val_a == val_b));
+            }
+            //
+            if (inequal) {
+                if (sublist.length > 0) {
+                    for (const sub of sublist) {
+                        result.push({
+                            name: key+"."+sub.name,
+                            value: (sub.oldValue),
+                            oldValue: (sub.value)
+                        });
+                    }
+                } else {
+                    result.push({
+                        name: "*",
+                        value: (sa),
+                        oldValue: (sb)
+                    });
+                }
             }
         }
 
