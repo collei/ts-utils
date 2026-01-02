@@ -42,6 +42,23 @@ class DateUtils {
 
         return new Date(year,month-1,day,hour,minute,second);
     }
+
+    /**
+     * Parse an array of string date values according the format.
+     * 
+     * @param values: string[]
+     * @param format: string
+     * @returns any[]
+     */
+    parses(values: string[], format: string = "yyyy-mm-dd"): any[] {
+        let result = [];
+
+        for (const value of values) {
+            result.push(this.parse(value, format));
+        }
+
+        return result;
+    }
 }
 
 
