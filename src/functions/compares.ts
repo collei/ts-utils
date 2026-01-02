@@ -29,6 +29,7 @@ class CompareUtils {
         const keys_a = Object.keys(sa);
         const keys_b = Object.keys(sb);
         const is_object = (obj: any) => obj != null && typeof obj === 'object';
+        const regx = /\.(0[Xx][0-9A-Fa-f]+|\d+)/g;
         let result: DivergentValueInfo[] = [];
 
         if (keys_a.length !== keys_b.length) {
@@ -63,17 +64,20 @@ class CompareUtils {
             if (inequal) {
                 if (sublist.length > 0) {
                     for (const sub of sublist) {
+                        const subn = key+"."+sub.name;
+                        let subname = regx.test(subn) ? subn.replace(regx, "[$1]") : subn;
+
                         result.push({
-                            name: key+"."+sub.name,
+                            name: (subname),
                             value: (sub.oldValue),
                             oldValue: (sub.value)
                         });
                     }
                 } else {
                     result.push({
-                        name: "*",
-                        value: (sa),
-                        oldValue: (sb)
+                        name: (key),
+                        value: (val_a),
+                        oldValue: (val_b)
                     });
                 }
             }
