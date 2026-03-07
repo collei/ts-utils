@@ -6,6 +6,12 @@
   },
   "description": "\"# ts-utils\"",
   "main": "dist/index.js",
+  "files": [
+    "dist/**/*",
+    "!dist/test/*",
+    "README.md",
+    "package.json"
+  ],  
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "npx jest",
